@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "gw2": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\dade\\source\\repos\\Blish-HUD-dev\\Blish HUD\\bin\\x64\\Debug\\net472\\Blish HUD.exe",
+      "commandLineArgs": "--debug --module \"$(ProjectDir)\\$(BaseOutputPath)\\$(Configuration)/$(TargetFramework)\\$(TargetName).bhm\""
+    },
+    "powershell": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\dade\\source\\repos\\Blish-HUD-dev\\Blish HUD\\bin\\x64\\Debug\\net472\\Blish HUD.exe",
+      "commandLineArgs": "--debug --process WindowsTerminal --window CASCADIA_HOSTING_WINDOW_CLASS --module \"$(ProjectDir)\\$(BaseOutputPath)\\$(Configuration)/$(TargetFramework)\\$(TargetName).bhm\""
+    }
+  }
+}

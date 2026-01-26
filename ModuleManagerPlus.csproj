@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--contentFiles: removes the Content folder that pops up in the solution explorer -->
+    <PackageReference Include="BlishHUD" Version="1.2.0" ExcludeAssets="runtime;contentFiles;analyzers" />
+    <PackageReference Include="SemanticVersioning" Version="1.2.2" />
+    <!--building the project fails otherwise, when BlishHud assets are excluded -->
+    <PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties manifest_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

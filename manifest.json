@@ -1,0 +1,23 @@
+{
+  "name": "ModuleManager+",
+  "version": "0.0.1",
+  "namespace": "fs.modulemanagerplus",
+  "package": "ModuleManagerPlus.dll",
+  "manifest_version": 1,
+
+  "description": "Extends module management functionality.",
+  "dependencies": {
+    "bh.blishhud": ">=1.2.0"
+  },
+  "url": "https://github.com/dlamkins/ModuleManagerPlus",
+  "contributors": [
+    {
+      "name": "Freesnow",
+      "username": "freesnow.7251",
+      "url": "https://github.com/dlamkins"
+    }
+  ],
+
+  "directories": [ "ModuleManagerPlus" ],
+  "enable_without_gw2": false
+}
