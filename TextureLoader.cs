@@ -8,11 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Flurl.Http;
 using System.IO;
+using Blish_HUD.Modules.Managers;
 
 namespace ModuleManagerPlus {
-    public class WebTextureLoader {
+    public class TextureLoader {
 
         private Dictionary<int, AsyncTexture2D> _textureCache = new Dictionary<int, AsyncTexture2D>();
+
+        private readonly ContentsManager _contents;
+
+        public TextureLoader(ContentsManager contents) {
+            _contents = contents;
+        }
+
+        public Texture2D LoadTextureFromRef(string path) {
+            int hash = path.GetHashCode();
+
+            if (!_textureCache.ContainsKey(hash)) {
+                _textureCache[hash] = new AsyncTexture2D(_contents.GetTexture(path));
+            }
+
+            return _textureCache[hash];
+        }
 
         public AsyncTexture2D LoadTextureFromWeb(string url) {
             int hash = url.GetHashCode();

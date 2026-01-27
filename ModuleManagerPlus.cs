@@ -7,6 +7,7 @@ using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ModuleManagerPlus.UI;
 using MonoGame.Extended;
 using static System.Net.WebRequestMethods;
@@ -22,7 +23,9 @@ namespace ModuleManagerPlus
         internal DirectoriesManager DirectoriesManager => this.ModuleParameters.DirectoriesManager;
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
 
-        public WebTextureLoader TextureLoader { get; private set; } = new WebTextureLoader();
+        public TextureLoader TextureLoader { get; private set; }
+
+        public static Effect MaskEffect { get; private set; }
 
 
         [ImportingConstructor]
@@ -30,16 +33,19 @@ namespace ModuleManagerPlus
             
         }
 
-        private bool _firstLoad = true;
-
         protected override void DefineSettings(SettingCollection settings) {
         }
 
         protected override async Task LoadAsync() {
-            
+            this.TextureLoader = new TextureLoader(this.ContentsManager);
+
+            MaskEffect = this.ContentsManager.GetEffect("effects/alphashader.mgfx");
         }
 
         protected override void OnModuleLoaded(EventArgs e) {
+            var panel = new CardPanel(this.TextureLoader);
+            panel.Location = new Point(250, 250);
+
             var exampleModule1 = new Data.Module() {
                 HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/bh.community.pathing.png",
                 Name = "Pathing",
@@ -61,11 +67,13 @@ namespace ModuleManagerPlus
             var newModuleCard1 = new ModuleCard(exampleModule1, TextureLoader);
             var newModuleCard2 = new ModuleCard(exampleModule2, TextureLoader);
 
-            newModuleCard1.Location = new Point(250, 250);
-            newModuleCard1.Parent = GameService.Graphics.SpriteScreen;
+            newModuleCard1.Location = new Point(100, 150);
+            newModuleCard1.Parent = panel;
 
-            newModuleCard2.Location = new Point(550, 250);
-            newModuleCard2.Parent = GameService.Graphics.SpriteScreen;
+            newModuleCard2.Location = new Point(450, 150);
+            newModuleCard2.Parent = panel;
+
+            panel.Parent = GameService.Graphics.SpriteScreen;
         }
 
         protected override void Update(GameTime gameTime) {
