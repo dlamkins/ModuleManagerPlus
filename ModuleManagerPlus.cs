@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Blish_HUD;
 using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
+using Flurl.Http;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModuleManagerPlus.UI;
@@ -27,6 +29,8 @@ namespace ModuleManagerPlus
 
         public static Effect MaskEffect { get; private set; }
 
+        private List<Data.Module> _modules = new List<Data.Module>();
+
 
         [ImportingConstructor]
         public ModuleManagerPlus([Import("ModuleParameters")] ModuleParameters moduleParameters) : base(moduleParameters) {
@@ -40,40 +44,49 @@ namespace ModuleManagerPlus
             this.TextureLoader = new TextureLoader(this.ContentsManager);
 
             MaskEffect = this.ContentsManager.GetEffect("effects/alphashader.mgfx");
+
+            
         }
 
         protected override void OnModuleLoaded(EventArgs e) {
-            var panel = new CardPanel(this.TextureLoader);
-            panel.Location = new Point(250, 250);
+            GameService.Overlay.SettingsTab.RegisterSettingMenu(new Blish_HUD.Controls.MenuItem("Module Repo v2"), (m) => new UI.ModuleRepoView(this.TextureLoader));
 
-            var exampleModule1 = new Data.Module() {
-                HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/bh.community.pathing.png",
-                Name = "Pathing",
-                Description = "Renders community made markers & trails to guide you through map completion, difficult story content, and tedious achievements.",
-                @Namespace = "bh.community.pathing",
-                LastRelease = DateTime.Now.AddDays(-10),
-                TotalDownloads = 779848
-            };
+            //var panel = new CardPanel(this.TextureLoader);
+            //panel.Location = new Point(250, 250);
 
-            var exampleModule2 = new Data.Module() {
-                HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/Manlaan.Mounts.png",
-                Name = "Mounts & More",
-                Description = "Adds mounts, mastery skills and novelty icons in the form of radial, icon rows and corner icons.",
-                @Namespace = "Manlaan.Mounts",
-                LastRelease = DateTime.Now.AddDays(-10),
-                TotalDownloads = 296203
-            };
+            //foreach (var module in _modules) {
+            //    var newModuleCard = new ModuleCard(module, TextureLoader);
+            //    newModuleCard.Parent = panel;
+            //}
 
-            var newModuleCard1 = new ModuleCard(exampleModule1, TextureLoader);
-            var newModuleCard2 = new ModuleCard(exampleModule2, TextureLoader);
+            //var exampleModule1 = new Data.Module() {
+            //    HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/bh.community.pathing.png",
+            //    Name = "Pathing",
+            //    Description = "Renders community made markers & trails to guide you through map completion, difficult story content, and tedious achievements.",
+            //    @Namespace = "bh.community.pathing",
+            //    LastRelease = DateTime.Now.AddDays(-10),
+            //    TotalDownloads = 779848
+            //};
 
-            newModuleCard1.Location = new Point(100, 150);
-            newModuleCard1.Parent = panel;
+            //var exampleModule2 = new Data.Module() {
+            //    HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/Manlaan.Mounts.png",
+            //    Name = "Mounts & More",
+            //    Description = "Adds mounts, mastery skills and novelty icons in the form of radial, icon rows and corner icons.",
+            //    @Namespace = "Manlaan.Mounts",
+            //    LastRelease = DateTime.Now.AddDays(-10),
+            //    TotalDownloads = 296203
+            //};
 
-            newModuleCard2.Location = new Point(450, 150);
-            newModuleCard2.Parent = panel;
+            //var newModuleCard1 = new ModuleCard(exampleModule1, TextureLoader);
+            //var newModuleCard2 = new ModuleCard(exampleModule2, TextureLoader);
 
-            panel.Parent = GameService.Graphics.SpriteScreen;
+            //newModuleCard1.Location = new Point(100, 150);
+            //newModuleCard1.Parent = panel;
+
+            //newModuleCard2.Location = new Point(450, 150);
+            //newModuleCard2.Parent = panel;
+
+            //panel.Parent = GameService.Graphics.SpriteScreen;
         }
 
         protected override void Update(GameTime gameTime) {
