@@ -50,7 +50,7 @@ namespace ModuleManagerPlus
         }
 
         protected override void OnModuleLoaded(EventArgs e) {
-            GameService.Overlay.SettingsTab.RegisterSettingMenu(new Blish_HUD.Controls.MenuItem("Module Repo v2", AsyncTexture2D.FromAssetId(156764)), (m) => new UI.ModuleRepoView(this.TextureLoader));
+            GameService.Overlay.SettingsTab.RegisterSettingMenu(new Blish_HUD.Controls.MenuItem("ModuleManager+", AsyncTexture2D.FromAssetId(156764)), (m) => new UI.ModuleRepoView(this.TextureLoader));
         }
 
         protected override void Update(GameTime gameTime) {
