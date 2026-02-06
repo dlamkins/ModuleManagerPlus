@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Blish_HUD;
+using Blish_HUD.Content;
 using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
@@ -49,44 +50,7 @@ namespace ModuleManagerPlus
         }
 
         protected override void OnModuleLoaded(EventArgs e) {
-            GameService.Overlay.SettingsTab.RegisterSettingMenu(new Blish_HUD.Controls.MenuItem("Module Repo v2"), (m) => new UI.ModuleRepoView(this.TextureLoader));
-
-            //var panel = new CardPanel(this.TextureLoader);
-            //panel.Location = new Point(250, 250);
-
-            //foreach (var module in _modules) {
-            //    var newModuleCard = new ModuleCard(module, TextureLoader);
-            //    newModuleCard.Parent = panel;
-            //}
-
-            //var exampleModule1 = new Data.Module() {
-            //    HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/bh.community.pathing.png",
-            //    Name = "Pathing",
-            //    Description = "Renders community made markers & trails to guide you through map completion, difficult story content, and tedious achievements.",
-            //    @Namespace = "bh.community.pathing",
-            //    LastRelease = DateTime.Now.AddDays(-10),
-            //    TotalDownloads = 779848
-            //};
-
-            //var exampleModule2 = new Data.Module() {
-            //    HeroUrl = "https://pkgs.blishhud.com/metadata/img/module/Manlaan.Mounts.png",
-            //    Name = "Mounts & More",
-            //    Description = "Adds mounts, mastery skills and novelty icons in the form of radial, icon rows and corner icons.",
-            //    @Namespace = "Manlaan.Mounts",
-            //    LastRelease = DateTime.Now.AddDays(-10),
-            //    TotalDownloads = 296203
-            //};
-
-            //var newModuleCard1 = new ModuleCard(exampleModule1, TextureLoader);
-            //var newModuleCard2 = new ModuleCard(exampleModule2, TextureLoader);
-
-            //newModuleCard1.Location = new Point(100, 150);
-            //newModuleCard1.Parent = panel;
-
-            //newModuleCard2.Location = new Point(450, 150);
-            //newModuleCard2.Parent = panel;
-
-            //panel.Parent = GameService.Graphics.SpriteScreen;
+            GameService.Overlay.SettingsTab.RegisterSettingMenu(new Blish_HUD.Controls.MenuItem("Module Repo v2", AsyncTexture2D.FromAssetId(156764)), (m) => new UI.ModuleRepoView(this.TextureLoader));
         }
 
         protected override void Update(GameTime gameTime) {

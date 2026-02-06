@@ -1,10 +1,5 @@
-﻿using Blish_HUD.Content;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuleManagerPlus.Data {
     internal class Module {
@@ -15,22 +10,26 @@ namespace ModuleManagerPlus.Data {
         [JsonProperty("Name")]
         public string Name { get; set; }
 
-        [JsonProperty("Summary")]
+        [JsonProperty("Description")]
         public string Description { get; set; }
 
-        public string HeroUrl => $"https://pkgs.blishhud.com/metadata/img/module/{this.Namespace}.png";
+        [JsonProperty("HeroUrl")]
+        public string HeroUrl { get; set; }
 
-        [JsonProperty("Downloads")]
+        [JsonProperty("HasMoreInfo")]
+        public bool HasMoreInfo { get; set; }
+
+        [JsonProperty("TotalDownloads")]
         public int TotalDownloads { get; set; }
 
-        [JsonProperty("LastUpdate")]
-        public DateTime LastRelease { get; set; }
+        [JsonProperty("Releases")]
+        public List<Release> Releases { get; set; }
 
-        [JsonProperty("AuthorName")]
-        public string AuthorName { get; set; }
+        [JsonProperty("AuthorId")]
+        public string AuthorId { get; set; }
 
-        [JsonProperty("AuthorAvatar")]
-        public string AuthorAvatarUrl { get; set; }
+        private Author _author;
+        public Author Author(PkgRoot root) => _author ??= root.Authors[this.AuthorId];
 
     }
 }
