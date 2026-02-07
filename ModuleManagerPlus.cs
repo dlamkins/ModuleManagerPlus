@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blish_HUD;
 using Blish_HUD.Content;
+using Blish_HUD.Controls;
 using Blish_HUD.Modules;
 using Blish_HUD.Modules.Managers;
 using Blish_HUD.Settings;
@@ -26,12 +27,9 @@ namespace ModuleManagerPlus
         internal DirectoriesManager DirectoriesManager => this.ModuleParameters.DirectoriesManager;
         internal Gw2ApiManager Gw2ApiManager => this.ModuleParameters.Gw2ApiManager;
 
-        public TextureLoader TextureLoader { get; private set; }
+        private MenuItem _moduleManagerPlusSettingEntry;
 
         public static Effect MaskEffect { get; private set; }
-
-        private List<Data.Module> _modules = new List<Data.Module>();
-
 
         [ImportingConstructor]
         public ModuleManagerPlus([Import("ModuleParameters")] ModuleParameters moduleParameters) : base(moduleParameters) {
@@ -42,15 +40,13 @@ namespace ModuleManagerPlus
         }
 
         protected override async Task LoadAsync() {
-            this.TextureLoader = new TextureLoader(this.ContentsManager);
-
             MaskEffect = this.ContentsManager.GetEffect("effects/alphashader.mgfx");
-
-            
         }
 
         protected override void OnModuleLoaded(EventArgs e) {
-            GameService.Overlay.SettingsTab.RegisterSettingMenu(new Blish_HUD.Controls.MenuItem("ModuleManager+", AsyncTexture2D.FromAssetId(156764)), (m) => new UI.ModuleRepoView(this.TextureLoader));
+            _moduleManagerPlusSettingEntry = new MenuItem("ModuleManager+", AsyncTexture2D.FromAssetId(156764));
+
+            GameService.Overlay.SettingsTab.RegisterSettingMenu(_moduleManagerPlusSettingEntry, (m) => new UI.ModuleRepoView(this.ContentsManager));
         }
 
         protected override void Update(GameTime gameTime) {
@@ -58,7 +54,9 @@ namespace ModuleManagerPlus
         }
 
         protected override void Unload() {
-            TextureLoader.Unload();
+            if (_moduleManagerPlusSettingEntry != null) { 
+                GameService.Overlay.SettingsTab.RemoveSettingMenu(_moduleManagerPlusSettingEntry);
+            }
         }
 
     }

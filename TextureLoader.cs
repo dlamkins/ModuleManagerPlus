@@ -1,13 +1,8 @@
 ﻿using Blish_HUD;
 using Blish_HUD.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Flurl.Http;
-using System.IO;
 using Blish_HUD.Modules.Managers;
 
 namespace ModuleManagerPlus {
@@ -70,6 +65,7 @@ namespace ModuleManagerPlus {
             foreach (var texture in _textureCache.Values) {
                 texture.Dispose();
             }
+            _textureCache.Clear();
         }
 
     }

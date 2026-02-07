@@ -16,19 +16,10 @@ using System.Threading.Tasks;
 namespace ModuleManagerPlus.UI {
     internal class HModuleCard : Container {
 
-        //private const int CONTROL_WIDTH = 650 /*458*/;
-
-        private int CONTROL_WIDTH => 693;
-        
-        //private const int IMAGE_LENGTH = 160 /*133*/;
-
+        private const int CONTROL_WIDTH = 693;
         private const int FOOTER_HEIGHT = 50;
-
         private const int TITLE_HEIGHT = 25;
-
         private const int BUFFER = 10;
-
-        //private const int MINHEIGHT = IMAGE_LENGTH + BUFFER * 2 + FOOTER_HEIGHT /*153*/;
 
         public Module Module { get; set; }
         public Author Author { get; set; }
@@ -89,9 +80,6 @@ namespace ModuleManagerPlus.UI {
         private string _downloadCount = "0";
 
         private static readonly BitmapFont _fontModuleName = GameService.Content.GetFont(ContentService.FontFace.Menomonia, ContentService.FontSize.Size24, ContentService.FontStyle.Regular);
-        private static readonly BitmapFont _fontModuleDesc = GameService.Content.DefaultFont18;
-
-
 
         public HModuleCard(Module module, Author author, TextureLoader textureLoader, ModuleInstallService installService) {
             this.Module = module;
@@ -107,16 +95,16 @@ namespace ModuleManagerPlus.UI {
             _avatarMask = textureLoader.LoadTextureFromRef("textures/avatar_mask.png");
 
             _downloadsTexture = textureLoader.LoadTextureFromRef("textures/downloads.png");
-
             _cornerTexture = textureLoader.LoadTextureFromRef("textures/corner-grid.png");
-
             _cornerGradientTexture = textureLoader.LoadTextureFromRef("textures/bg.png");
 
             if (module.HeroUrl != null) {
                 _heroTexture = textureLoader.LoadTextureFromWeb(module.HeroUrl);
             }
 
-            _authorTexture = textureLoader.LoadTextureFromWeb(author.AvatarUrl);
+            if (author.AvatarUrl != null) { 
+                _authorTexture = textureLoader.LoadTextureFromWeb(author.AvatarUrl);
+            }
 
             _downloadCount = FormatDownloads(module.TotalDownloads);
 
